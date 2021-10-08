@@ -59,7 +59,10 @@ func (client *Client) InitRepo(inputRepo clients.Repo) error {
 	}
 
 	// Sanity check.
-	repo, _, err := client.repoClient.Repositories.Get(client.ctx, ghRepo.owner, ghRepo.repo)
+	repo, resp, err := client.repoClient.Repositories.Get(client.ctx, ghRepo.owner, ghRepo.repo)
+	if resp.StatusCode == http.StatusNotFound {
+		return sce.WithMessage(sce.ErrNonExistentURL, fmt.Sprintf("URL not found: %s", inputRepo.URL()))
+	}
 	if err != nil {
 		return sce.WithMessage(sce.ErrRepoUnreachable, err.Error())
 	}

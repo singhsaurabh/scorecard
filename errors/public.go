@@ -19,10 +19,13 @@ import (
 	"fmt"
 )
 
-//nolint
 var (
+	// ErrScorecardInternal indicates something went wrong in our internal processing.
 	ErrScorecardInternal = errors.New("internal error")
-	ErrRepoUnreachable   = errors.New("repo unreachable")
+	// ErrNonExistentURL indicates a 404 status was returned for the URL.
+	ErrNonExistentURL = errors.New("HTTP StatusCode 404")
+	// ErrRepoUnreachable indicates unable to establish connection with the repo.
+	ErrRepoUnreachable = errors.New("repo unreachable")
 	// ErrorUnsupportedHost indicates the repo's host is unsupported.
 	ErrorUnsupportedHost = errors.New("unsupported host")
 	// ErrorInvalidURL indicates the repo's full URL was not passed.
